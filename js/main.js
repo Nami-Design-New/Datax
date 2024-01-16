@@ -1,0 +1,309 @@
+! function (t) {
+    "use strict";
+    var e;
+    if (t(window).on("load", (function () {
+            t(".preloader").fadeOut(), t(".slick-slider").slick("refresh")
+        })), t(window).on("resize", (function () {
+            t(".slick-slider").slick("refresh")
+        })), t(".preloader").length > 0 && t(".preloaderCls").each((function () {
+            t(this).on("click", (function (e) {
+                e.preventDefault(), t(".preloader").css("display", "none")
+            }))
+        })), t.fn.thmobilemenu = function (e) {
+            var a = t.extend({
+                menuToggleBtn: ".th-menu-toggle",
+                bodyToggleClass: "th-body-visible",
+                subMenuClass: "th-submenu",
+                subMenuParent: "th-item-has-children",
+                subMenuParentToggle: "th-active",
+                meanExpandClass: "th-mean-expand",
+                appendElement: '<span class="th-mean-expand"></span>',
+                subMenuToggleClass: "th-open",
+                toggleSpeed: 400
+            }, e);
+            return this.each((function () {
+                var e = t(this);
+
+                function s() {
+                    e.toggleClass(a.bodyToggleClass);
+                    var s = "." + a.subMenuClass;
+                    t(s).each((function () {
+                        t(this).hasClass(a.subMenuToggleClass) && (t(this).removeClass(a.subMenuToggleClass), t(this).css("display", "none"), t(this).parent().removeClass(a.subMenuParentToggle))
+                    }))
+                }
+                e.find("li").each((function () {
+                    var e = t(this).find("ul");
+                    e.addClass(a.subMenuClass), e.css("display", "none"), e.parent().addClass(a.subMenuParent), e.prev("a").append(a.appendElement), e.next("a").append(a.appendElement)
+                }));
+                var i = "." + a.meanExpandClass;
+                t(i).each((function () {
+                    t(this).on("click", (function (e) {
+                        var s;
+                        e.preventDefault(), s = t(this).parent(), t(s).next("ul").length > 0 ? (t(s).parent().toggleClass(a.subMenuParentToggle), t(s).next("ul").slideToggle(a.toggleSpeed), t(s).next("ul").toggleClass(a.subMenuToggleClass)) : t(s).prev("ul").length > 0 && (t(s).parent().toggleClass(a.subMenuParentToggle), t(s).prev("ul").slideToggle(a.toggleSpeed), t(s).prev("ul").toggleClass(a.subMenuToggleClass))
+                    }))
+                })), t(a.menuToggleBtn).each((function () {
+                    t(this).on("click", (function () {
+                        s()
+                    }))
+                })), e.on("click", (function (t) {
+                    t.stopPropagation(), s()
+                })), e.find("div").on("click", (function (t) {
+                    t.stopPropagation()
+                }))
+            }))
+        }, t(".menu-wrapper").thmobilemenu(), t(window).scroll((function () {
+            t(this).scrollTop() > 500 ? t(".sticky-wrapper").addClass("sticky") : t(".sticky-wrapper").removeClass("sticky")
+        })), t(e = ".onepage-nav").length > 0 && t(e).each((function () {
+            var e = t(this).find("a");
+            t(this).find(e).each((function () {
+                t(this).on("click", (function () {
+                    var e = t(this.getAttribute("href"));
+                    e.length && (event.preventDefault(), t("html, body").stop().animate({
+                        scrollTop: e.offset().top - 10
+                    }, 1e3))
+                }))
+            }))
+        })), t(".scroll-top").length > 0) {
+        var a = document.querySelector(".scroll-top"),
+            s = document.querySelector(".scroll-top path"),
+            i = s.getTotalLength();
+        s.style.transition = s.style.WebkitTransition = "none", s.style.strokeDasharray = i + " " + i, s.style.strokeDashoffset = i, s.getBoundingClientRect(), s.style.transition = s.style.WebkitTransition = "stroke-dashoffset 10ms linear";
+        var n = function () {
+            var e = t(window).scrollTop(),
+                a = t(document).height() - t(window).height(),
+                n = i - e * i / a;
+            s.style.strokeDashoffset = n
+        };
+        n(), t(window).scroll(n);
+        jQuery(window).on("scroll", (function () {
+            jQuery(this).scrollTop() > 50 ? jQuery(a).addClass("show") : jQuery(a).removeClass("show")
+        })), jQuery(a).on("click", (function (t) {
+            return t.preventDefault(), jQuery("html, body").animate({
+                scrollTop: 0
+            }, 750), !1
+        }))
+    }
+    t("[data-bg-src]").length > 0 && t("[data-bg-src]").each((function () {
+        var e = t(this).attr("data-bg-src");
+        t(this).css("background-image", "url(" + e + ")"), t(this).removeAttr("data-bg-src").addClass("background-image")
+    })),t(".da-carousel").each((function () {
+        var e = t(this);
+
+        function a(t) {
+            return e.data(t)
+        }
+        var s = '<button type="button" class="slick-prev"><i class="' + a("prev-arrow") + '"></i></button>',
+            i = '<button type="button" class="slick-next"><i class="' + a("next-arrow") + '"></i></button>';
+        t("[data-slick-next]").each((function () {
+            t(this).on("click", (function (e) {
+                e.preventDefault(), t(t(this).data("slick-next")).slick("slickNext")
+            }))
+        })), t("[data-slick-prev]").each((function () {
+            t(this).on("click", (function (e) {
+                e.preventDefault(), t(t(this).data("slick-prev")).slick("slickPrev")
+            }))
+        })), 1 == a("arrows") && (e.closest(".arrow-wrap").length || e.closest(".container").parent().addClass("arrow-wrap")), e.slick({
+            dots: !!a("dots"),
+            fade: !!a("fade"),
+            arrows: !!a("arrows"),
+            speed: a("speed") ? a("speed") : 1e3,
+            asNavFor: !!a("asnavfor") && a("asnavfor"),
+            autoplay: 0 != a("autoplay"),
+            infinite: 0 != a("infinite"),
+            slidesToShow: a("slide-show") ? a("slide-show") : 1,
+            adaptiveHeight: !!a("adaptive-height"),
+            centerMode: !!a("center-mode"),
+            autoplaySpeed: a("autoplay-speed") ? a("autoplay-speed") : 8e3,
+            centerPadding: a("center-padding") ? a("center-padding") : "0",
+            focusOnSelect: 0 != a("focuson-select"),
+            pauseOnFocus: !!a("pauseon-focus"),
+            pauseOnHover: !!a("pauseon-hover"),
+            variableWidth: !!a("variable-width"),
+            vertical: !!a("vertical"),
+            verticalSwiping: !!a("vertical"),
+            swipeToSlide: !!a("swipetoslide"),
+            prevArrow: a("prev-arrow") ? s : '<button type="button" class="slick-prev"><i class="far fa-arrow-left"></i></button>',
+            nextArrow: a("next-arrow") ? i : '<button type="button" class="slick-next"><i class="far fa-arrow-right"></i></button>',
+            rtl: "rtl" == t("html").attr("dir"),
+            responsive: [{
+                breakpoint: 1600,
+                settings: {
+                    arrows: !!a("xl-arrows"),
+                    dots: !!a("xl-dots"),
+                    slidesToShow: a("xl-slide-show") ? a("xl-slide-show") : a("slide-show"),
+                    centerMode: !!a("xl-center-mode"),
+                    centerPadding: "0"
+                }
+            }, {
+                breakpoint: 1400,
+                settings: {
+                    arrows: !!a("ml-arrows"),
+                    dots: !!a("ml-dots"),
+                    slidesToShow: a("ml-slide-show") ? a("ml-slide-show") : a("slide-show"),
+                    centerMode: !!a("ml-center-mode"),
+                    centerPadding: 0
+                }
+            }, {
+                breakpoint: 1200,
+                settings: {
+                    arrows: !!a("lg-arrows"),
+                    dots: !!a("lg-dots"),
+                    slidesToShow: a("lg-slide-show") ? a("lg-slide-show") : a("slide-show"),
+                    centerMode: !!a("lg-center-mode") && a("lg-center-mode"),
+                    centerPadding: 0
+                }
+            }, {
+                breakpoint: 992,
+                settings: {
+                    arrows: !!a("md-arrows"),
+                    dots: !!a("md-dots"),
+                    slidesToShow: a("md-slide-show") ? a("md-slide-show") : 1,
+                    centerMode: !!a("md-center-mode") && a("md-center-mode"),
+                    centerPadding: 0
+                }
+            }, {
+                breakpoint: 768,
+                settings: {
+                    arrows: !!a("sm-arrows"),
+                    dots: !!a("sm-dots"),
+                    slidesToShow: a("sm-slide-show") ? a("sm-slide-show") : 1,
+                    centerMode: !!a("sm-center-mode") && a("sm-center-mode"),
+                    centerPadding: 0
+                }
+            }, {
+                breakpoint: 576,
+                settings: {
+                    arrows: !!a("xs-arrows"),
+                    dots: !!a("xs-dots"),
+                    slidesToShow: a("xs-slide-show") ? a("xs-slide-show") : 1,
+                    centerMode: !!a("xs-center-mode") && a("xs-center-mode"),
+                    centerPadding: 0
+                }
+            }]
+        })
+    })), t("[data-ani-duration]").each((function () {
+        var e = t(this).data("ani-duration");
+        t(this).css("animation-duration", e)
+    })), t("[data-ani-delay]").each((function () {
+        var e = t(this).data("ani-delay");
+        t(this).css("animation-delay", e)
+    })), t("[data-ani]").each((function () {
+        var e = t(this).data("ani");
+        t(this).addClass(e), t(".slick-current [data-ani]").addClass("th-animated")
+    })), t(".da-carousel").on("afterChange", (function (e, a, s, i) {
+        t(a.$slides).find("[data-ani]").removeClass("th-animated"), t(a.$slides[s]).find("[data-ani]").addClass("th-animated")
+    }));
+    var o, r, c, l = ".ajax-contact",
+        d = '[name="email"]',
+        h = t(".form-messages");
+
+    function p() {
+        var e = t(l).serialize();
+        (function () {
+            var e, a = !0;
+
+            function s(s) {
+                s = s.split(",");
+                for (var i = 0; i < s.length; i++) e = l + " " + s[i], t(e).val() ? (t(e).removeClass("is-invalid"), a = !0) : (t(e).addClass("is-invalid"), a = !1)
+            }
+            s('[name="name"],[name="email"],[name="subject"],[name="number"],[name="message"]'), t(d).val() && t(d).val().match(/^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/) ? (t(d).removeClass("is-invalid"), a = !0) : (t(d).addClass("is-invalid"), a = !1);
+            return a
+        })() && jQuery.ajax({
+            url: t(l).attr("action"),
+            data: e,
+            type: "POST"
+        }).done((function (e) {
+            h.removeClass("error"), h.addClass("success"), h.text(e), t(l + ' input:not([type="submit"]),' + l + " textarea").val("")
+        })).fail((function (t) {
+            h.removeClass("success"), h.addClass("error"), "" !== t.responseText ? h.html(t.responseText) : h.html("Oops! An error occured and your message could not be sent.")
+        }))
+    }
+
+    function u(t) {
+        return parseInt(t, 10)
+    }
+    t(l).on("submit", (function (t) {
+            t.preventDefault(), p()
+        })), o = ".popup-search-box", r = ".searchClose", c = "show", t(".searchBoxToggler").on("click", (function (e) {
+            e.preventDefault(), t(o).addClass(c)
+        })), t(o).on("click", (function (e) {
+            e.stopPropagation(), t(o).removeClass(c)
+        })), t(o).find("form").on("click", (function (e) {
+            e.stopPropagation(), t(o).addClass(c)
+        })), t(r).on("click", (function (e) {
+            e.preventDefault(), e.stopPropagation(), t(o).removeClass(c)
+        })),
+        function (e, a, s, i) {
+            t(a).on("click", (function (a) {
+                a.preventDefault(), t(e).addClass(i)
+            })), t(e).on("click", (function (a) {
+                a.stopPropagation(), t(e).removeClass(i)
+            })), t(e + " > div").on("click", (function (a) {
+                a.stopPropagation(), t(e).addClass(i)
+            })), t(s).on("click", (function (a) {
+                a.preventDefault(), a.stopPropagation(), t(e).removeClass(i)
+            }))
+        }(".sidemenu-wrapper", ".sideMenuToggler", ".sideMenuCls", "show"), t(".popup-image").magnificPopup({
+            type: "image",
+            mainClass: "mfp-zoom-in",
+            removalDelay: 260,
+            gallery: {
+                enabled: !0
+            }
+        }), t(".popup-video").magnificPopup({
+            type: "iframe",
+            mainClass: "mfp-zoom-in",
+            removalDelay: 260
+        }), t(".popup-content").magnificPopup({
+            type: "inline",
+            midClick: !0
+        }), t(".popup-content").on("click", (function () {
+            t(".slick-slider").slick("refresh")
+        })), t.fn.sectionPosition = function (e, a) {
+            t(this).each((function () {
+                var s, i, n, o, r, c = t(this);
+                s = Math.floor(c.height() / 2), i = c.attr(e), n = c.attr(a), o = u(t(n).css("padding-top")), r = u(t(n).css("padding-bottom")), "top-half" === i ? (t(n).css("padding-bottom", r + s + "px"), c.css("margin-top", "-" + s + "px")) : "bottom-half" === i && (t(n).css("padding-top", o + s + "px"), c.css("margin-bottom", "-" + s + "px"))
+            }))
+        };
+
+    function f() {
+        t(".feature-circle .progressbar").each((function () {
+            var e = t(this).attr("data-path-color"),
+                a = t(this).offset().top,
+                s = t(window).scrollTop(),
+                i = t(this).find(".circle").attr("data-percent"),
+                n = (parseInt(i, 10), parseInt(100, 10), t(this).data("animate"));
+            a < s + t(window).height() - 30 && !n && (t(this).data("animate", !0), t(this).find(".circle").circleProgress({
+                startAngle: -Math.PI / 2,
+                value: i / 100,
+                size: 100,
+                thickness: 6,
+                emptyFill: "transparent",
+                lineCap: "round",
+                fill: {
+                    color: e
+                }
+            }).on("circle-animation-progress", (function (e, a, s) {
+                t(this).find(".circle-num").text((100 * s).toFixed(0) + "%")
+            })).stop())
+        })), t(".skill-circle .progressbar").each((function () {
+            var e = t(this).offset().top,
+                a = t(window).scrollTop(),
+                s = t(this).find(".circle").attr("data-percent"),
+                i = (parseInt(s, 10), parseInt(100, 10), t(this).data("animate"));
+            e < a + t(window).height() - 30 && !i && (t(this).data("animate", !0), t(this).find(".circle").circleProgress({
+                startAngle: -Math.PI / 2,
+                value: s / 100,
+                size: 100,
+                thickness: 8,
+                emptyFill: "#E0E0E0",
+                lineCap: "round",
+                fill: {
+                    gradient: ["#F11F22", "#F2891D"]
+                }
+            }).on("circle-animation-progress", (function (e, a, s) {
+                t(this).find(".circle-num").text((100 * s).toFixed(0) + "%")
+            })).stop())
+        }))
+    }
+}(jQuery);
